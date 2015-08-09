@@ -9,6 +9,7 @@ import me.loki2302.events.PostCreatedDomainEvent;
 import me.loki2302.queries.get_post.GetPostQuery;
 import me.loki2302.queries.get_post.GetPostQueryHandler;
 import me.loki2302.queries.get_post.GetPostQueryResult;
+import me.loki2302.queries.get_post.SuccessfulGetPostQueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -48,11 +49,19 @@ public class CreatePostApiRequestHandler implements ApiRequestHandler {
         getPostQuery.postId = postCreatedCreatePostCommandResult.postId;
         GetPostQueryResult getPostQueryResult = getPostQueryHandler.getPost(getPostQuery);
 
+        if(!(getPostQueryResult instanceof SuccessfulGetPostQueryResult)) {
+            // TODO: should it be internal error instead?
+            return new FailedToCreatePostCreatePostApiResponse();
+        }
+
+        SuccessfulGetPostQueryResult successfulGetPostQueryResult =
+                (SuccessfulGetPostQueryResult)getPostQueryResult;
+
         PostCreatedCreatePostApiResponse postCreatedCreatePostApiResponse = new PostCreatedCreatePostApiResponse();
-        postCreatedCreatePostApiResponse.postId = getPostQueryResult.postId;
-        postCreatedCreatePostApiResponse.userId = getPostQueryResult.userId;
-        postCreatedCreatePostApiResponse.title = getPostQueryResult.title;
-        postCreatedCreatePostApiResponse.text = getPostQueryResult.text;
+        postCreatedCreatePostApiResponse.postId = successfulGetPostQueryResult.postId;
+        postCreatedCreatePostApiResponse.userId = successfulGetPostQueryResult.userId;
+        postCreatedCreatePostApiResponse.title = successfulGetPostQueryResult.title;
+        postCreatedCreatePostApiResponse.text = successfulGetPostQueryResult.text;
         return postCreatedCreatePostApiResponse;
     }
 }

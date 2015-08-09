@@ -9,6 +9,7 @@ import me.loki2302.events.UserCreatedDomainEvent;
 import me.loki2302.queries.get_user_profile.GetUserProfileQuery;
 import me.loki2302.queries.get_user_profile.GetUserProfileQueryHandler;
 import me.loki2302.queries.get_user_profile.GetUserProfileQueryResult;
+import me.loki2302.queries.get_user_profile.SuccessfulGetUserProfileQueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -45,11 +46,18 @@ public class CreateUserApiRequestHandler implements ApiRequestHandler {
         GetUserProfileQuery getUserProfileQuery = new GetUserProfileQuery();
         getUserProfileQuery.userId = userId;
         GetUserProfileQueryResult getUserProfileQueryResult = getUserProfileQueryHandler.getUserProfile(getUserProfileQuery);
+        if(!(getUserProfileQueryResult instanceof SuccessfulGetUserProfileQueryResult)) {
+            // TODO: should it be internal error instead?
+            return new FailedToCreateUserCreateUserApiResponse();
+        }
+
+        SuccessfulGetUserProfileQueryResult successfulGetUserProfileQueryResult =
+                (SuccessfulGetUserProfileQueryResult)getUserProfileQueryResult;
 
         UserCreatedCreateUserApiResponse userCreatedCreateUserApiResponse = new UserCreatedCreateUserApiResponse();
-        userCreatedCreateUserApiResponse.userId = getUserProfileQueryResult.userId;
-        userCreatedCreateUserApiResponse.name = getUserProfileQueryResult.name;
-        userCreatedCreateUserApiResponse.postCount = getUserProfileQueryResult.postCount;
+        userCreatedCreateUserApiResponse.userId = successfulGetUserProfileQueryResult.userId;
+        userCreatedCreateUserApiResponse.name = successfulGetUserProfileQueryResult.name;
+        userCreatedCreateUserApiResponse.postCount = successfulGetUserProfileQueryResult.postCount;
 
         return userCreatedCreateUserApiResponse;
     }

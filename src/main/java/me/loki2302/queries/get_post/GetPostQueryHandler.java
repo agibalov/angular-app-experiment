@@ -32,11 +32,10 @@ public class GetPostQueryHandler implements QueryHandler {
     public GetPostQueryResult getPost(GetPostQuery getPostQuery) {
         PostView postView = postViewRepository.findOne(getPostQuery.postId);
         if(postView == null) {
-            // TODO: replace with return value
-            throw new RuntimeException("post not found");
+            return new PostNotFoundGetPostQueryResult();
         }
 
-        GetPostQueryResult getPostQueryResult = new GetPostQueryResult();
+        SuccessfulGetPostQueryResult getPostQueryResult = new SuccessfulGetPostQueryResult();
         getPostQueryResult.postId = postView.id;
         getPostQueryResult.userId = postView.userId;
         getPostQueryResult.title = postView.title;

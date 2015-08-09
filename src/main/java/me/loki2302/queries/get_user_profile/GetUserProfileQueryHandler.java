@@ -22,15 +22,13 @@ public class GetUserProfileQueryHandler implements QueryHandler {
         long userId = getUserProfileQuery.userId;
         UserProfileView userProfileView = userProfileViewRepository.findOne(userId);
         if(userProfileView == null) {
-            // TODO: replace with return value
-            throw new RuntimeException("Looks like this user does not exist");
+            return new UserNotFoundGetUserProfileQueryResult();
         }
 
-        GetUserProfileQueryResult getUserProfileQueryResult = new GetUserProfileQueryResult();
+        SuccessfulGetUserProfileQueryResult getUserProfileQueryResult = new SuccessfulGetUserProfileQueryResult();
         getUserProfileQueryResult.userId = userProfileView.id;
         getUserProfileQueryResult.name = userProfileView.name;
         getUserProfileQueryResult.postCount = userProfileView.postCount;
-
         return getUserProfileQueryResult;
     }
 
