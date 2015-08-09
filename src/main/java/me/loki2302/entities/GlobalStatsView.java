@@ -1,7 +1,5 @@
 package me.loki2302.entities;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -12,5 +10,5 @@ public class GlobalStatsView {
     @Id
     public Long id;
     public int userCount;
-
+    public int postCount;
 }
