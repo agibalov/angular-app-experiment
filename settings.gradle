@@ -1,2 +1,5 @@
-rootProject.name = 'cqrs-experiment'
+rootProject.name = 'angular-app-experiment'
+include 'app'
+include 'backend'
+include 'frontend'
 
