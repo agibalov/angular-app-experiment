@@ -21,6 +21,10 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'io.github.bonigarcia:webdrivermanager:1.4.10'
+    testCompile 'org.seleniumhq.selenium:selenium-java:2.53.1'
+    testCompile 'org.seleniumhq.selenium:selenium-chrome-driver:2.53.1'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.tuckey', name: 'urlrewritefilter', version: '4.0.4'
     compile project(':backend')

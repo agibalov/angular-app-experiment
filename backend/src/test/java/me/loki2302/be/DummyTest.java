@@ -1,15 +1,13 @@
 package me.loki2302.be;
 
-import me.loki2302.be.be.App;
-import me.loki2302.be.be.CommandHandler;
-import me.loki2302.be.be.commands.CreateCommentCommand;
-import me.loki2302.be.be.commands.CreateFollowshipCommand;
-import me.loki2302.be.be.commands.CreatePostCommand;
-import me.loki2302.be.be.commands.CreateUserCommand;
-import me.loki2302.be.be.readmodel.followshipfeed.FollowshipFeedRecordView;
-import me.loki2302.be.be.readmodel.followshipfeed.FollowshipFeedRecordViewMaterializer;
-import me.loki2302.be.be.readmodel.userview.UserView;
-import me.loki2302.be.be.readmodel.userview.UserViewMaterializer;
+import me.loki2302.be.commands.CreateCommentCommand;
+import me.loki2302.be.commands.CreateFollowshipCommand;
+import me.loki2302.be.commands.CreatePostCommand;
+import me.loki2302.be.commands.CreateUserCommand;
+import me.loki2302.be.readmodel.followshipfeed.FollowshipFeedRecordView;
+import me.loki2302.be.readmodel.followshipfeed.FollowshipFeedRecordViewMaterializer;
+import me.loki2302.be.readmodel.userview.UserView;
+import me.loki2302.be.readmodel.userview.UserViewMaterializer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;

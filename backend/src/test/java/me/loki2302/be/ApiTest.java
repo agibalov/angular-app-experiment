@@ -1,7 +1,6 @@
 package me.loki2302.be;
 
-import me.loki2302.be.be.App;
-import me.loki2302.be.be.controllers.UserAttributesDto;
+import me.loki2302.be.controllers.UserAttributesDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
