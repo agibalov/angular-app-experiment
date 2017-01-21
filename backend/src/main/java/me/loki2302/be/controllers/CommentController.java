@@ -13,6 +13,7 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 @RestController
+@RequestMapping("/api")
 public class CommentController {
     @Autowired
     private CommandHandler commandHandler;

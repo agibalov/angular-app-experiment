@@ -33,9 +33,9 @@ public class CommandHandler {
     public long handle(CreateUserCommand command) {
         String name = command.name;
 
-        UserEntity userEntity = userEntityRepository.findByName("name");
+        UserEntity userEntity = userEntityRepository.findByName(name);
         if(userEntity != null) {
-            throw new RuntimeException("User already exists");
+            throw new UserAlreadyExistsException();
         }
 
         userEntity = new UserEntity();

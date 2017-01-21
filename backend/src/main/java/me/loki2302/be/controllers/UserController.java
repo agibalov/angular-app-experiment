@@ -2,6 +2,7 @@ package me.loki2302.be.controllers;
 
 import me.loki2302.be.CommandHandler;
 import me.loki2302.be.QueryHandler;
+import me.loki2302.be.UserAlreadyExistsException;
 import me.loki2302.be.commands.CreateUserCommand;
 import me.loki2302.be.readmodel.userview.UserView;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 import static org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder.on;
 
 @RestController
+@RequestMapping("/api")
 public class UserController {
     @Autowired
     private CommandHandler commandHandler;
@@ -25,7 +27,13 @@ public class UserController {
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public ResponseEntity createUser(@RequestBody UserAttributesDto userAttributesDto) {
         CreateUserCommand command = new CreateUserCommand(userAttributesDto.username);
-        long userId = commandHandler.handle(command);
+        long userId;
+        try {
+            userId = commandHandler.handle(command);
+        } catch(UserAlreadyExistsException e) {
+            return ResponseEntity.badRequest().build();
+        }
+
         URI location = fromMethodCall(on(UserController.class).getUser(userId)).build().toUri();
         return ResponseEntity.created(location).build();
     }

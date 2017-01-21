@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api")
 public class FollowshipFeedController {
     @RequestMapping(value = "/users/{userId}/feed", method = RequestMethod.GET)
     public ResponseEntity getFollowshipFeedRecords() {
