@@ -46,7 +46,7 @@ public class UserController {
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
     public ResponseEntity getUser(@PathVariable("userId") long userId) {
-        UserView userView = queryHandler.findUser(userId);
+        UserView userView = queryHandler.findUserById(userId);
         if(userView == null) {
             return ResponseEntity.notFound().build();
         }

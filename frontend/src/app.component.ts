@@ -1,4 +1,6 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
+import {AuthenticationService} from "./authentication.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'app',
@@ -11,9 +13,16 @@ import {Component} from "@angular/core";
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['']">Home</a></li>
-                <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['sign-in']">Sign In</a></li>
-                <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['sign-up']">Sign Up</a></li>
+                <li *ngIf="!authenticationService.isAuthenticated" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['sign-in']">Sign In</a></li>
+                <li *ngIf="!authenticationService.isAuthenticated" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['sign-up']">Sign Up</a></li>
             </ul>
+            <form *ngIf="authenticationService.isAuthenticated" class="navbar-form navbar-right" (ngSubmit)="signOut()">
+                <fieldset [disabled]="wip">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">Sign Out</button>
+                    </div>
+                </fieldset>
+            </form>
         </div>
     </div>
 </nav>
@@ -22,5 +31,18 @@ import {Component} from "@angular/core";
 </div>
 `
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+    constructor(
+        private router: Router,
+        private authenticationService: AuthenticationService) {
+    }
+
+    async ngOnInit(): Promise<void> {
+        await this.authenticationService.init();
+    }
+
+    async signOut(): Promise<void> {
+        await this.authenticationService.signOut();
+        this.router.navigate(['/']);
+    }
 }

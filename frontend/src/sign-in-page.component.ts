@@ -1,6 +1,9 @@
-import {Component, Injectable} from "@angular/core";
+import {Component} from "@angular/core";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "./authentication.service";
+import {
+    AuthenticationService, UnknownApiError,
+    UserIsNotRegisteredApiError
+} from "./authentication.service";
 
 @Component({
     template: `
@@ -34,6 +37,14 @@ export class SignInPageComponent {
             });
 
             this.router.navigate(['/']);
+        } catch(e) {
+            if(e instanceof UserIsNotRegisteredApiError) {
+                console.log('User is not registered', e);
+            } else if(e instanceof UnknownApiError) {
+                console.log('Unknown API error', e);
+            } else {
+                console.log('Unknown error', e);
+            }
         } finally {
             this.wip = false;
         }

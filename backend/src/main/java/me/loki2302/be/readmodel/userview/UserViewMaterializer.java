@@ -19,8 +19,12 @@ public class UserViewMaterializer {
     @Autowired
     private UserViewRepository userViewRepository;
 
-    public UserView findUser(long userId) {
+    public UserView findOneById(long userId) {
         return userViewRepository.findOne(userId);
+    }
+
+    public UserView findOneByName(String username) {
+        return userViewRepository.findByName(username);
     }
 
     public List<UserView> findAll() {

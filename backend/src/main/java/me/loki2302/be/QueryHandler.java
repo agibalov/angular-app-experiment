@@ -12,8 +12,12 @@ public class QueryHandler {
     @Autowired
     private UserViewMaterializer userViewMaterializer;
 
-    public UserView findUser(long userId) {
-        return userViewMaterializer.findUser(userId);
+    public UserView findUserById(long userId) {
+        return userViewMaterializer.findOneById(userId);
+    }
+
+    public UserView findUserByName(String username) {
+        return userViewMaterializer.findOneByName(username);
     }
 
     public List<UserView> findUsers() {
