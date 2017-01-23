@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
 import {AuthenticationService} from "./authentication.service";
 import {Router} from "@angular/router";
 
@@ -13,8 +13,8 @@ import {Router} from "@angular/router";
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['']">Home</a></li>
-                <li *ngIf="!authenticationService.isAuthenticated" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['sign-in']">Sign In</a></li>
-                <li *ngIf="!authenticationService.isAuthenticated" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['sign-up']">Sign Up</a></li>
+                <li *ngIf="!authenticationService.isAuthenticated" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['', 'sign-in']">Sign In</a></li>
+                <li *ngIf="!authenticationService.isAuthenticated" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact:true}"><a [routerLink]="['', 'sign-up']">Sign Up</a></li>
             </ul>
             <form *ngIf="authenticationService.isAuthenticated" class="navbar-form navbar-right" (ngSubmit)="signOut()">
                 <fieldset [disabled]="wip">
@@ -31,14 +31,10 @@ import {Router} from "@angular/router";
 </div>
 `
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
     constructor(
         private router: Router,
         private authenticationService: AuthenticationService) {
-    }
-
-    async ngOnInit(): Promise<void> {
-        await this.authenticationService.init();
     }
 
     async signOut(): Promise<void> {

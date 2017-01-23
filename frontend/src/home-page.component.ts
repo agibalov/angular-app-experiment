@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {Http} from "@angular/http";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     template: `
@@ -10,12 +10,10 @@ import {Http} from "@angular/http";
 export class HomePageComponent implements OnInit {
     text: string;
 
-    constructor(private http: Http) {
+    constructor(private route: ActivatedRoute) {
     }
 
-    async ngOnInit(): Promise<void> {
-        const response = await this.http.get('/api/hello').toPromise();
-        const responseText = response.text();
-        this.text = responseText;
+    ngOnInit() {
+        this.text = (<any>this.route.snapshot.data).hello;
     }
 }

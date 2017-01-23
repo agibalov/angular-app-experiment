@@ -1,5 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Http, Response} from "@angular/http";
+import {UserAlreadyRegisteredApiError} from "./user-already-registered-api-error";
+import {UnknownApiError} from "./unknown-api-error";
+import {UserNotRegisteredApiError} from "./user-not-registered-api-error";
 
 export class UserDto {
     userId: number;
@@ -8,33 +11,6 @@ export class UserDto {
     commentCount: number;
     followerCount: number;
     followsCount: number;
-}
-
-export abstract class ApiError extends Error {
-    constructor(message: string) {
-        super(message);
-    }
-}
-
-export class UserAlreadyExistsApiError extends ApiError {
-    constructor() {
-        super('User already exists');
-        Object.setPrototypeOf(this, UserAlreadyExistsApiError.prototype);
-    }
-}
-
-export class UserIsNotRegisteredApiError extends ApiError {
-    constructor() {
-        super('User is not registered exists');
-        Object.setPrototypeOf(this, UserIsNotRegisteredApiError.prototype);
-    }
-}
-
-export class UnknownApiError extends ApiError {
-    constructor() {
-        super('Unknown API error');
-        Object.setPrototypeOf(this, UnknownApiError.prototype);
-    }
 }
 
 @Injectable()
@@ -74,7 +50,7 @@ export class AuthenticationService {
             if(e instanceof Response) {
                 const response = <Response>e;
                 if(response.status == 400) {
-                    throw new UserAlreadyExistsApiError();
+                    throw new UserAlreadyRegisteredApiError();
                 } else {
                     throw new UnknownApiError();
                 }
@@ -92,7 +68,7 @@ export class AuthenticationService {
             if(e instanceof Response) {
                 const response = <Response>e;
                 if(response.status == 400) {
-                    throw new UserIsNotRegisteredApiError();
+                    throw new UserNotRegisteredApiError();
                 } else {
                     throw new UnknownApiError();
                 }
