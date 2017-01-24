@@ -24,8 +24,11 @@ public class PostController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
-    public ResponseEntity createPost(@RequestBody CommentAttributesDto commentAttributesDto) {
-        CreatePostCommand command = new CreatePostCommand(0, commentAttributesDto.text);
+    public ResponseEntity createPost(
+            @CurrentUser long userId,
+            @RequestBody CommentAttributesDto commentAttributesDto) {
+
+        CreatePostCommand command = new CreatePostCommand(userId, commentAttributesDto.text);
         long postId = commandHandler.handle(command);
         URI location = fromMethodCall(on(PostController.class).getPost(postId)).build().toUri();
         return ResponseEntity.created(location).build();

@@ -20,11 +20,8 @@ public class AuthenticationController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/me")
-    public ResponseEntity getMe(@CurrentUser String username) {
-        /*String username = (String)SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();*/
-
-        UserView userView = queryHandler.findUserByName(username);
+    public ResponseEntity getMe(@CurrentUser long userId) {
+        UserView userView = queryHandler.findUserById(userId);
         if(userView == null) {
             return ResponseEntity.notFound().build();
         }
@@ -41,7 +38,7 @@ public class AuthenticationController {
         }
 
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
-                username,
+                userView.userId,
                 "",
                 AuthorityUtils.NO_AUTHORITIES);
         SecurityContextHolder.getContext().setAuthentication(token);

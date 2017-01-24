@@ -20,9 +20,12 @@ public class FollowshipController {
     private QueryHandler queryHandler;
 
     @RequestMapping(value = "/followships", method = RequestMethod.POST)
-    public ResponseEntity createFollowship(@RequestBody FollowshipAttributesDto followshipAttributesDto) {
+    public ResponseEntity createFollowship(
+            @CurrentUser long userId,
+            @RequestBody FollowshipAttributesDto followshipAttributesDto) {
+
         CreateFollowshipCommand command = new CreateFollowshipCommand(
-                followshipAttributesDto.followerId,
+                userId,
                 followshipAttributesDto.leaderId);
 
         commandHandler.handle(command);
