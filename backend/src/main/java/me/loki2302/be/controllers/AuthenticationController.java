@@ -20,9 +20,9 @@ public class AuthenticationController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/me")
-    public ResponseEntity getMe() {
-        String username = (String)SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal();
+    public ResponseEntity getMe(@CurrentUser String username) {
+        /*String username = (String)SecurityContextHolder.getContext()
+                .getAuthentication().getPrincipal();*/
 
         UserView userView = queryHandler.findUserByName(username);
         if(userView == null) {

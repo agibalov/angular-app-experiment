@@ -27,7 +27,7 @@ public class ApiTest {
         UserAttributesDto userAttributesDto = new UserAttributesDto();
         userAttributesDto.username = "loki2302";
         ResponseEntity responseEntity = restTemplate.postForEntity(
-                "http://localhost:8080/users",
+                "http://localhost:8080/api/users",
                 userAttributesDto,
                 Void.class);
 

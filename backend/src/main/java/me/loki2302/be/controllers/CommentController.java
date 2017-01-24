@@ -5,6 +5,7 @@ import me.loki2302.be.QueryHandler;
 import me.loki2302.be.commands.CreatePostCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -21,6 +22,7 @@ public class CommentController {
     @Autowired
     private QueryHandler queryHandler;
 
+    @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/comments", method = RequestMethod.POST)
     public ResponseEntity createPost(@RequestBody PostAttributesDto postAttributesDto) {
         CreatePostCommand command = new CreatePostCommand(0, postAttributesDto.text);

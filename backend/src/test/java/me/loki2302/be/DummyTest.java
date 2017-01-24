@@ -58,7 +58,7 @@ public class DummyTest {
     }
 
     private void dumpUser(long userId) {
-        UserView userView = userViewMaterializer.findUser(userId);
+        UserView userView = userViewMaterializer.findOneById(userId);
         LOGGER.info("*** {} ***", userView);
 
         List<FollowshipFeedRecordView> records = followshipFeedRecordViewMaterializer.findByUserId(userId);
