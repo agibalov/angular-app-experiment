@@ -1,8 +1,8 @@
 package me.loki2302.be.controllers;
 
-import me.loki2302.be.CommandHandler;
-import me.loki2302.be.QueryHandler;
+import me.loki2302.be.CreateFollowshipCommandHandler;
 import me.loki2302.be.commands.CreateFollowshipCommand;
+import me.loki2302.be.readmodel.followshipfeed.FollowshipFeedRecordQueryHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class FollowshipController {
     @Autowired
-    private CommandHandler commandHandler;
+    private CreateFollowshipCommandHandler createFollowshipCommandHandler;
 
     @Autowired
-    private QueryHandler queryHandler;
+    private FollowshipFeedRecordQueryHandler followshipFeedRecordQueryHandler;
 
     @RequestMapping(value = "/followships", method = RequestMethod.POST)
     public ResponseEntity createFollowship(
@@ -28,7 +28,7 @@ public class FollowshipController {
                 userId,
                 followshipAttributesDto.leaderId);
 
-        commandHandler.handle(command);
+        createFollowshipCommandHandler.handle(command);
 
         return ResponseEntity.noContent().build();
     }

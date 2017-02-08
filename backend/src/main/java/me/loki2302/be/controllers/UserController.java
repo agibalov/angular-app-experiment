@@ -1,10 +1,10 @@
 package me.loki2302.be.controllers;
 
-import me.loki2302.be.CommandHandler;
-import me.loki2302.be.QueryHandler;
+import me.loki2302.be.CreateUserCommandHandler;
 import me.loki2302.be.UserAlreadyExistsException;
 import me.loki2302.be.commands.CreateUserCommand;
 import me.loki2302.be.readmodel.userview.UserView;
+import me.loki2302.be.readmodel.userview.UserQueryHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +19,17 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 @RequestMapping("/api")
 public class UserController {
     @Autowired
-    private CommandHandler commandHandler;
+    private CreateUserCommandHandler createUserCommandHandler;
 
     @Autowired
-    private QueryHandler queryHandler;
+    private UserQueryHandler userQueryHandler;
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
     public ResponseEntity createUser(@RequestBody UserAttributesDto userAttributesDto) {
         CreateUserCommand command = new CreateUserCommand(userAttributesDto.username);
         long userId;
         try {
-            userId = commandHandler.handle(command);
+            userId = createUserCommandHandler.handle(command);
         } catch(UserAlreadyExistsException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -40,13 +40,13 @@ public class UserController {
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public ResponseEntity getUsers() {
-        List<UserView> userViews = queryHandler.findUsers();
+        List<UserView> userViews = userQueryHandler.findAll();
         return ResponseEntity.ok(userViews);
     }
 
     @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
     public ResponseEntity getUser(@PathVariable("userId") long userId) {
-        UserView userView = queryHandler.findUserById(userId);
+        UserView userView = userQueryHandler.findOneById(userId);
         if(userView == null) {
             return ResponseEntity.notFound().build();
         }

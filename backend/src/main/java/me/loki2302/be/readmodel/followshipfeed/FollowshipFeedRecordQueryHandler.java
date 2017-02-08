@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class FollowshipFeedRecordViewMaterializer {
-    private final static Logger LOGGER = LoggerFactory.getLogger(FollowshipFeedRecordViewMaterializer.class);
+public class FollowshipFeedRecordQueryHandler {
+    private final static Logger LOGGER = LoggerFactory.getLogger(FollowshipFeedRecordQueryHandler.class);
 
     @Autowired
     private FollowshipFeedRecordViewRepository followshipFeedRecordViewRepository;

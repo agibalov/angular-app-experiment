@@ -5,9 +5,9 @@ import me.loki2302.be.commands.CreateFollowshipCommand;
 import me.loki2302.be.commands.CreatePostCommand;
 import me.loki2302.be.commands.CreateUserCommand;
 import me.loki2302.be.readmodel.followshipfeed.FollowshipFeedRecordView;
-import me.loki2302.be.readmodel.followshipfeed.FollowshipFeedRecordViewMaterializer;
+import me.loki2302.be.readmodel.followshipfeed.FollowshipFeedRecordQueryHandler;
 import me.loki2302.be.readmodel.userview.UserView;
-import me.loki2302.be.readmodel.userview.UserViewMaterializer;
+import me.loki2302.be.readmodel.userview.UserQueryHandler;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -24,31 +24,40 @@ public class DummyTest {
     private final static Logger LOGGER = LoggerFactory.getLogger(DummyTest.class);
 
     @Autowired
-    private CommandHandler commandHandler;
+    private CreateUserCommandHandler createUserCommandHandler;
 
     @Autowired
-    private UserViewMaterializer userViewMaterializer;
+    private CreatePostCommandHandler createPostCommandHandler;
 
     @Autowired
-    private FollowshipFeedRecordViewMaterializer followshipFeedRecordViewMaterializer;
+    private CreateCommentCommandHandler createCommentCommandHandler;
+
+    @Autowired
+    private CreateFollowshipCommandHandler createFollowshipCommandHandler;
+
+    @Autowired
+    private UserQueryHandler userQueryHandler;
+
+    @Autowired
+    private FollowshipFeedRecordQueryHandler followshipFeedRecordQueryHandler;
 
     @Test
     public void dummy() {
-        long userAId = commandHandler.handle(new CreateUserCommand("loki2302"));
-        long postId = commandHandler.handle(new CreatePostCommand(userAId, "hello there"));
-        commandHandler.handle(new CreatePostCommand(userAId, "hello there #2"));
-        commandHandler.handle(new CreateCommentCommand(userAId, postId, "that's a nice post"));
-        long userBId = commandHandler.handle(new CreateUserCommand("johnsmith"));
+        long userAId = createUserCommandHandler.handle(new CreateUserCommand("loki2302"));
+        long postId = createPostCommandHandler.handle(new CreatePostCommand(userAId, "hello there"));
+        createPostCommandHandler.handle(new CreatePostCommand(userAId, "hello there #2"));
+        createCommentCommandHandler.handle(new CreateCommentCommand(userAId, postId, "that's a nice post"));
+        long userBId = createUserCommandHandler.handle(new CreateUserCommand("johnsmith"));
 
-        long followerOfAId = commandHandler.handle(new CreateUserCommand("followerOfA"));
-        commandHandler.handle(new CreateFollowshipCommand(followerOfAId, userAId));
+        long followerOfAId = createUserCommandHandler.handle(new CreateUserCommand("followerOfA"));
+        createFollowshipCommandHandler.handle(new CreateFollowshipCommand(followerOfAId, userAId));
 
-        long followerOfBId = commandHandler.handle(new CreateUserCommand("followerOfB"));
-        commandHandler.handle(new CreateFollowshipCommand(followerOfBId, userBId));
+        long followerOfBId = createUserCommandHandler.handle(new CreateUserCommand("followerOfB"));
+        createFollowshipCommandHandler.handle(new CreateFollowshipCommand(followerOfBId, userBId));
 
-        commandHandler.handle(new CreateFollowshipCommand(userBId, userAId));
+        createFollowshipCommandHandler.handle(new CreateFollowshipCommand(userBId, userAId));
 
-        List<UserView> userViews = userViewMaterializer.findAll();
+        List<UserView> userViews = userQueryHandler.findAll();
         LOGGER.info("{}", userViews);
 
         dumpUser(userAId);
@@ -58,10 +67,10 @@ public class DummyTest {
     }
 
     private void dumpUser(long userId) {
-        UserView userView = userViewMaterializer.findOneById(userId);
+        UserView userView = userQueryHandler.findOneById(userId);
         LOGGER.info("*** {} ***", userView);
 
-        List<FollowshipFeedRecordView> records = followshipFeedRecordViewMaterializer.findByUserId(userId);
+        List<FollowshipFeedRecordView> records = followshipFeedRecordQueryHandler.findByUserId(userId);
         records.forEach(r -> LOGGER.info("{}", r));
         LOGGER.info("");
     }

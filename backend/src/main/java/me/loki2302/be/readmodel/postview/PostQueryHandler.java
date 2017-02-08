@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class PostViewMaterializer {
-    private final static Logger LOGGER = LoggerFactory.getLogger(PostViewMaterializer.class);
+public class PostQueryHandler {
+    private final static Logger LOGGER = LoggerFactory.getLogger(PostQueryHandler.class);
 
     @Autowired
     private PostViewRepository postViewRepository;
@@ -23,6 +23,10 @@ public class PostViewMaterializer {
 
     public List<PostView> findAll() {
         return postViewRepository.findAll();
+    }
+
+    public List<PostView> findByUserId(long userId) {
+        return postViewRepository.findByUserId(userId);
     }
 
     @EventListener

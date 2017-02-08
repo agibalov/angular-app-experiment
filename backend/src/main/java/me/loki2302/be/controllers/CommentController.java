@@ -1,7 +1,6 @@
 package me.loki2302.be.controllers;
 
-import me.loki2302.be.CommandHandler;
-import me.loki2302.be.QueryHandler;
+import me.loki2302.be.CreateCommentCommandHandler;
 import me.loki2302.be.commands.CreateCommentCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +16,7 @@ import static org.springframework.web.servlet.mvc.method.annotation.MvcUriCompon
 @RequestMapping("/api")
 public class CommentController {
     @Autowired
-    private CommandHandler commandHandler;
-
-    @Autowired
-    private QueryHandler queryHandler;
+    private CreateCommentCommandHandler createCommentCommandHandler;
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/comments", method = RequestMethod.POST)
@@ -33,7 +29,7 @@ public class CommentController {
                 commentAttributesDto.postId,
                 commentAttributesDto.text);
 
-        long commentId = commandHandler.handle(command);
+        long commentId = createCommentCommandHandler.handle(command);
         URI location = fromMethodCall(on(CommentController.class).getComment(commentId)).build().toUri();
         return ResponseEntity.created(location).build();
     }

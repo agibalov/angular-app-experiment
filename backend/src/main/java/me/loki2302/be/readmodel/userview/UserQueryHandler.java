@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class UserViewMaterializer {
-    private final static Logger LOGGER = LoggerFactory.getLogger(UserViewMaterializer.class);
+public class UserQueryHandler {
+    private final static Logger LOGGER = LoggerFactory.getLogger(UserQueryHandler.class);
 
     @Autowired
     private UserViewRepository userViewRepository;

@@ -1,7 +1,7 @@
 package me.loki2302.be.controllers;
 
-import me.loki2302.be.QueryHandler;
 import me.loki2302.be.readmodel.userview.UserView;
+import me.loki2302.be.readmodel.userview.UserQueryHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class AuthenticationController {
     @Autowired
-    private QueryHandler queryHandler;
+    private UserQueryHandler userQueryHandler;
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/me")
     public ResponseEntity getMe(@CurrentUser Long userId) {
-        UserView userView = queryHandler.findUserById(userId);
+        UserView userView = userQueryHandler.findOneById(userId);
         if(userView == null) {
             return ResponseEntity.notFound().build();
         }
@@ -32,7 +32,7 @@ public class AuthenticationController {
     @RequestMapping("/sign-in")
     public ResponseEntity signIn(@RequestBody UserAttributesDto userAttributesDto) {
         String username = userAttributesDto.username;
-        UserView userView = queryHandler.findUserByName(username);
+        UserView userView = userQueryHandler.findOneByName(username);
         if(userView == null) {
             return ResponseEntity.badRequest().build();
         }
