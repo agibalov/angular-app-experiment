@@ -21,7 +21,7 @@ public class FollowshipController {
 
     @RequestMapping(value = "/followships", method = RequestMethod.POST)
     public ResponseEntity createFollowship(
-            @CurrentUser long userId,
+            @CurrentUser Long userId,
             @RequestBody FollowshipAttributesDto followshipAttributesDto) {
 
         CreateFollowshipCommand command = new CreateFollowshipCommand(

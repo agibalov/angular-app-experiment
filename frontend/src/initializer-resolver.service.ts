@@ -11,4 +11,5 @@ export class InitializerResolver implements Resolve<string> {
         await this.authenticationService.init();
         return 'hello';
     }
-};
+}
+

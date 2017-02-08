@@ -6,13 +6,13 @@ import {NotFoundPageComponent} from "./not-found-page.component";
 import {HomePageComponent} from "./home-page.component";
 import {HttpModule} from "@angular/http";
 import {SignUpPageComponent} from "./sign-up-page.component";
-import {AuthenticationService, UserService} from "./authentication.service";
+import {AuthenticationService, UserService, PostService} from "./authentication.service";
 import {SignInPageComponent} from "./sign-in-page.component";
 import {FormsModule} from "@angular/forms";
 import {ProfilePageComponent} from "./profile.component";
 import {OuterAppComponent} from "./outer-app.component";
 import {InitializerResolver} from "./initializer-resolver.service";
-import {HelloResolver} from "../hello-resolver.service";
+import {PostsResolver} from "./posts-resolver.service";
 
 const appRoutes: Routes = [
     {
@@ -26,7 +26,7 @@ const appRoutes: Routes = [
                 path: '',
                 component: HomePageComponent,
                 resolve: {
-                    hello: HelloResolver
+                    posts: PostsResolver
                 }
             },
             { path: 'sign-up', component: SignUpPageComponent },
@@ -59,8 +59,9 @@ const appRoutes: Routes = [
     providers: [
         AuthenticationService,
         UserService,
+        PostService,
         InitializerResolver,
-        HelloResolver
+        PostsResolver
     ],
     bootstrap: [ OuterAppComponent ]
 })

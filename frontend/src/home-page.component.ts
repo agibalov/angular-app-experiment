@@ -1,19 +1,23 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
+import {PostDto} from "./authentication.service";
 
 @Component({
     template: `
 <h1>Home</h1>
-<p>API says: {{text}}</p>
+<ul *ngIf="posts.length > 0">
+    <li *ngFor="let post of posts">#{{post.postId}}: {{post.text}}</li>
+</ul>
+<p *ngIf="posts.length == 0">There are no posts</p>
 `
 })
 export class HomePageComponent implements OnInit {
-    text: string;
+    posts: PostDto[];
 
     constructor(private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.text = (<any>this.route.snapshot.data).hello;
+        this.posts = (<any>this.route.snapshot.data).posts;
     }
 }

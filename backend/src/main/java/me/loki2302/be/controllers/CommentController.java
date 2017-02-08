@@ -25,7 +25,7 @@ public class CommentController {
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/comments", method = RequestMethod.POST)
     public ResponseEntity createPost(
-            @CurrentUser long userId,
+            @CurrentUser Long userId,
             @RequestBody CommentAttributesDto commentAttributesDto) {
 
         CreateCommentCommand command = new CreateCommentCommand(

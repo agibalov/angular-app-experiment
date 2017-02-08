@@ -20,7 +20,7 @@ public class AuthenticationController {
 
     @PreAuthorize("isAuthenticated()")
     @RequestMapping("/me")
-    public ResponseEntity getMe(@CurrentUser long userId) {
+    public ResponseEntity getMe(@CurrentUser Long userId) {
         UserView userView = queryHandler.findUserById(userId);
         if(userView == null) {
             return ResponseEntity.notFound().build();

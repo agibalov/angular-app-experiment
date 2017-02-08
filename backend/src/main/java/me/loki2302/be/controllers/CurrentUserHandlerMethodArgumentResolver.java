@@ -38,8 +38,8 @@ public class CurrentUserHandlerMethodArgumentResolver implements HandlerMethodAr
         }
 
         UsernamePasswordAuthenticationToken token = (UsernamePasswordAuthenticationToken)principal;
-        String username = (String)token.getPrincipal();
+        Long userId = (Long)token.getPrincipal();
 
-        return username;
+        return userId;
     }
 }

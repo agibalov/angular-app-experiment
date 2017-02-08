@@ -39,6 +39,6 @@ export class AppComponent {
 
     async signOut(): Promise<void> {
         await this.authenticationService.signOut();
-        this.router.navigate(['/']);
+        await this.router.navigate(['/']);
     }
 }

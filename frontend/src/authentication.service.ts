@@ -25,6 +25,23 @@ export class UserService {
     }
 }
 
+export class PostDto {
+    postId: number;
+    text: string;
+}
+
+@Injectable()
+export class PostService {
+    constructor(private http: Http) {
+    }
+
+    async getPosts(): Promise<PostDto[]> {
+        const getPostsResponse = await this.http.get(`/api/posts/`).toPromise();
+        const postDtos = <PostDto[]>getPostsResponse.json();
+        return postDtos;
+    }
+}
+
 @Injectable()
 export class AuthenticationService {
     isAuthenticated: boolean = false;
