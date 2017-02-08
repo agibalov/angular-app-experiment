@@ -6,13 +6,15 @@ import {NotFoundPageComponent} from "./not-found-page.component";
 import {HomePageComponent} from "./home-page.component";
 import {HttpModule} from "@angular/http";
 import {SignUpPageComponent} from "./sign-up-page.component";
-import {AuthenticationService, UserService, PostService} from "./authentication.service";
 import {SignInPageComponent} from "./sign-in-page.component";
 import {FormsModule} from "@angular/forms";
 import {ProfilePageComponent} from "./profile.component";
 import {OuterAppComponent} from "./outer-app.component";
 import {InitializerResolver} from "./initializer-resolver.service";
 import {PostsResolver} from "./posts-resolver.service";
+import {PostService} from "./api/post.service";
+import {UserService} from "./api/user.service";
+import {AuthenticationService} from "./api/authentication.service";
 
 const appRoutes: Routes = [
     {

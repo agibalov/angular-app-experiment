@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {ActivatedRoute} from "@angular/router";
-import {PostDto} from "./authentication.service";
+import {PostDto} from "./api/post-dto";
 
 @Component({
     template: `

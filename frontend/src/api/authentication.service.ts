@@ -4,44 +4,6 @@ import {UserAlreadyRegisteredApiError} from "./user-already-registered-api-error
 import {UnknownApiError} from "./unknown-api-error";
 import {UserNotRegisteredApiError} from "./user-not-registered-api-error";
 
-export class UserDto {
-    userId: number;
-    name: string;
-    postCount: number;
-    commentCount: number;
-    followerCount: number;
-    followsCount: number;
-}
-
-@Injectable()
-export class UserService {
-    constructor(private http: Http) {
-    }
-
-    async getUser(userId: number): Promise<UserDto> {
-        const getUserResponse = await this.http.get(`/api/users/${userId}`).toPromise();
-        const userDto = <UserDto>getUserResponse.json();
-        return userDto;
-    }
-}
-
-export class PostDto {
-    postId: number;
-    text: string;
-}
-
-@Injectable()
-export class PostService {
-    constructor(private http: Http) {
-    }
-
-    async getPosts(): Promise<PostDto[]> {
-        const getPostsResponse = await this.http.get(`/api/posts/`).toPromise();
-        const postDtos = <PostDto[]>getPostsResponse.json();
-        return postDtos;
-    }
-}
-
 @Injectable()
 export class AuthenticationService {
     isAuthenticated: boolean = false;

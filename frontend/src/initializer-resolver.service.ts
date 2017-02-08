@@ -1,5 +1,5 @@
 import {RouterStateSnapshot, ActivatedRouteSnapshot, Resolve} from "@angular/router";
-import {AuthenticationService} from "./authentication.service";
+import {AuthenticationService} from "./api/authentication.service";
 import {Injectable} from "@angular/core";
 
 @Injectable()

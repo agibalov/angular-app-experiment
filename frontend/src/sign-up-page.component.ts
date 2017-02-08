@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
-import {AuthenticationService} from "./authentication.service";
-import {UserAlreadyRegisteredApiError} from "./user-already-registered-api-error";
-import {UnknownApiError} from "./unknown-api-error";
+import {AuthenticationService} from "./api/authentication.service";
+import {UserAlreadyRegisteredApiError} from "./api/user-already-registered-api-error";
+import {UnknownApiError} from "./api/unknown-api-error";
 
 @Component({
     template: `

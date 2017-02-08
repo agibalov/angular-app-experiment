@@ -1,6 +1,7 @@
-import {PostDto, PostService} from "./authentication.service";
 import {RouterStateSnapshot, ActivatedRouteSnapshot, Resolve} from "@angular/router";
 import {Injectable} from "@angular/core";
+import {PostService} from "./api/post.service";
+import {PostDto} from "./api/post-dto";
 
 @Injectable()
 export class PostsResolver implements Resolve<PostDto[]> {
