@@ -29,9 +29,9 @@ public class PostController {
     @RequestMapping(value = "/posts", method = RequestMethod.POST)
     public ResponseEntity createPost(
             @CurrentUser Long userId,
-            @RequestBody CommentAttributesDto commentAttributesDto) {
+            @RequestBody PostAttributesDto postAttributesDto) {
 
-        CreatePostCommand command = new CreatePostCommand(userId, commentAttributesDto.text);
+        CreatePostCommand command = new CreatePostCommand(userId, postAttributesDto.text);
         long postId = createPostCommandHandler.handle(command);
         URI location = fromMethodCall(on(PostController.class).getPost(postId)).build().toUri();
         return ResponseEntity.created(location).build();
