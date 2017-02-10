@@ -35,7 +35,7 @@ export class SignInPageComponent {
                 username: this.username
             });
 
-            this.router.navigate(['/']);
+            this.router.navigate(['home']);
         } catch(e) {
             if(e instanceof UserNotRegisteredApiError) {
                 console.log('User is not registered', e);

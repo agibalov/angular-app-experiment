@@ -6,7 +6,7 @@ import {PostService, PostAttributesDto} from "./api/post.service";
 
 @Component({
     template: `
-<h1>Home</h1>
+<h1>User home</h1>
 
 <form (ngSubmit)="submitPost()">
     <fieldset [disabled]="wip">
@@ -24,7 +24,7 @@ import {PostService, PostAttributesDto} from "./api/post.service";
 <p *ngIf="posts.length == 0">There are no posts</p>
 `
 })
-export class HomePageComponent implements OnInit {
+export class UserHomePageComponent implements OnInit {
     wip: boolean;
     content: string;
     posts: PostDto[];

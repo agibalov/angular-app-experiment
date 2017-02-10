@@ -1,9 +1,9 @@
-import {NgModule} from '@angular/core';
+import {NgModule, ErrorHandler} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule, Routes} from '@angular/router';
 import {AppComponent} from "./app.component";
 import {NotFoundPageComponent} from "./not-found-page.component";
-import {HomePageComponent} from "./home-page.component";
+import {UserHomePageComponent} from "./user-home-page.component";
 import {HttpModule} from "@angular/http";
 import {SignUpPageComponent} from "./sign-up-page.component";
 import {SignInPageComponent} from "./sign-in-page.component";
@@ -15,6 +15,8 @@ import {PostsResolver} from "./posts-resolver.service";
 import {PostService} from "./api/post.service";
 import {UserService} from "./api/user.service";
 import {AuthenticationService} from "./api/authentication.service";
+import {MyErrorHandler} from "./my-error-handler.service";
+import {AnonymousHomePageComponent} from "./anonymous-home-page.component";
 
 const appRoutes: Routes = [
     {
@@ -24,9 +26,10 @@ const appRoutes: Routes = [
             dummy: InitializerResolver
         },
         children: [
+            { path: '', component: AnonymousHomePageComponent },
             {
-                path: '',
-                component: HomePageComponent,
+                path: 'home',
+                component: UserHomePageComponent,
                 resolve: {
                     posts: PostsResolver
                 }
@@ -52,7 +55,8 @@ const appRoutes: Routes = [
     declarations: [
         OuterAppComponent,
         AppComponent,
-        HomePageComponent,
+        AnonymousHomePageComponent,
+        UserHomePageComponent,
         SignUpPageComponent,
         SignInPageComponent,
         ProfilePageComponent,
@@ -63,7 +67,8 @@ const appRoutes: Routes = [
         UserService,
         PostService,
         InitializerResolver,
-        PostsResolver
+        PostsResolver,
+        { provide: ErrorHandler, useClass: MyErrorHandler }
     ],
     bootstrap: [ OuterAppComponent ]
 })
